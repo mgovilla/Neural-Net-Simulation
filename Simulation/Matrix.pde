@@ -1,4 +1,3 @@
-
 class Matrix {
   
   //local variables

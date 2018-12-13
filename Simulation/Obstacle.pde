@@ -1,17 +1,17 @@
 class Obstacle {
-  float X, Y, Xvel, Yvel; 
+  PVector pos;
   float sideLen; 
   
   Obstacle() {
+    pos = new PVector();
     
   }
   
-  void draw() {
+  void show() {
      
-    rect(X, Y, sideLen, sideLen);
-    
-    X += 200*cos(frameCount);
-    Y += 200*sin(frameCount);
-    
+    rect(pos.x, pos.y, sideLen, sideLen);
+        
   }
+  
+  
 }
