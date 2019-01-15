@@ -34,12 +34,12 @@ void setup(){
    robot.pos.x = (int) random(width);
    robot.pos.y = (int) random(height);
    
-  while(isOnObs(goal.pos) && isOnObs(robot.pos) && isOnGoal(robot.pos)) {
+  do {
     goal.pos.x = (int) random(100, width - 100);
     goal.pos.y = (int) random(100, height - 100);  
     robot.pos.x = (int) random(width);
     robot.pos.y = (int) random(height);
-  }
+  } while(isOnObs(goal.pos) && isOnObs(robot.pos) && isOnGoal(robot.pos));
   
 }
 
@@ -87,11 +87,13 @@ void draw() {
   
   goal.show();
   
-  if(robot.alive && !robot.win)
+  if(robot.alive && !robot.win) {
     robot.show();
+    robot.look();
+  }
     
   
-  robot.look();
+  
   
                   
 }

@@ -8,6 +8,7 @@ class Robot {
   Matrix reward       = new Matrix(1, 1);
   
   float[] vision      = new float[10]; //5 directions, looking for obstacles/wall and the goal
+
   
   boolean alive       = true, 
           test        = false,
@@ -18,7 +19,8 @@ class Robot {
   
   
   float   angle       = 0, 
-          deltaAngle  = PI/16;
+          deltaAngle  = PI/16,
+          curDir      = 0;
           
   
                 //---------------------------------------------------------------------------------------------------------------------------------------------------------\\ 
@@ -45,21 +47,13 @@ class Robot {
    
    
     lineAngle(pos.x, pos.y, angle, 200);
-      
+       
         
-  }
-   
- 
-  void setVelocity() {
-    
   }
   
   void move(float trans, float ang) {
-      
     pos.x -= trans*cos(ang);
     pos.y -= trans*sin(ang);
-    
-  
   }
   
   
@@ -101,36 +95,40 @@ class Robot {
   void look() {
     
       vision = new float[15];
-      float[] tempValues;
       //look left
-      //float[] tempValues = lookInDirection(angleToDirection(angle - PI/8));
-      //vision[0] = tempValues[0];
-      //vision[1] = tempValues[1];
-      //vision[2] = tempValues[2];
       
-      //tempValues = lookInDirection(angleToDirection(angle - PI/16));
-      //vision[3] = tempValues[0];
-      //vision[4] = tempValues[1];
-      //vision[5] = tempValues[2];
-      
+      float[] tempValues = lookInDirection(angleToDirection(angle - PI/8));
+      vision[0] = tempValues[0];
+      vision[1] = tempValues[1];
+      vision[2] = tempValues[2];
+            
+      tempValues = lookInDirection(angleToDirection(angle - PI/16));
+      vision[3] = tempValues[0];
+      vision[4] = tempValues[1];
+      vision[5] = tempValues[2];
+           
       //look up
       tempValues = lookInDirection(angleToDirection(angle));
       vision[6] = tempValues[0];
       vision[7] = tempValues[1];
       vision[8] = tempValues[2];
       
-      ////look up/right
-      //tempValues = lookInDirection(angleToDirection(angle + PI/16));
-      //vision[9] = tempValues[0];
-      //vision[10] = tempValues[1];
-      //vision[11] = tempValues[2];
+      //look up/right
+      tempValues = lookInDirection(angleToDirection(angle + PI/16));
+      vision[9] = tempValues[0];
+      vision[10] = tempValues[1];
+      vision[11] = tempValues[2];
       
-  
-      //tempValues = lookInDirection(angleToDirection(angle + PI/8));
-      //vision[12] = tempValues[0];
-      //vision[13] = tempValues[1];
-      //vision[14] = tempValues[2];
+      tempValues = lookInDirection(angleToDirection(angle + PI/8));
+      vision[12] = tempValues[0];
+      vision[13] = tempValues[1];
+      vision[14] = tempValues[2];
+      
+      
      
+     
+      //max(vision[1], vision[4], vision[7], vision[10], vision[13]);
+      
       printArray(tempValues);
     
   } 
@@ -155,13 +153,13 @@ class Robot {
 
       //check for goal at the position
       if (!goalDetected && isOnGoal(position)) {
-        visionInDirection[0] = distance(pos.x, pos.y, goal.pos.x, goal.pos.y);
+        visionInDirection[0] = (int) (1.0 / distance(pos.x, pos.y, goal.pos.x, goal.pos.y));
         goalDetected = true; // dont check if food is already found
       }
 
       //check for obstacle at the position
       if (!obsDetected && isOnObs(position)) {
-        visionInDirection[1] = distance;
+        visionInDirection[1] = 1.0/(distance);
         obsDetected = true; // dont check if tail is already found
       }
 
@@ -171,8 +169,8 @@ class Robot {
     }
 
     //set the distance to the wall
-    visionInDirection[2] = distance;
-    printArray(visionInDirection);
+    visionInDirection[2] = 1.0 / distance;
+    
     return visionInDirection;
   }  
 }
