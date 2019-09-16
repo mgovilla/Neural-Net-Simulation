@@ -1,7 +1,7 @@
 # Neural-Net-Simulation
 GT project to train a neural network to run a robot through an obstacle course. Inspired by https://www.youtube.com/watch?v=WtEYMELvRHI, but we didn't have a license to Matlab so we made a similar version in Processing.
 
-![Environment] (/images/Environment.PNG)
+![Environment](/images/Environment.PNG)
 
 This is the environment for a robot to learn how to avoid obstacles in search of some goal. The red circle is the goal, while the blue squares are the obstacles. 
 
